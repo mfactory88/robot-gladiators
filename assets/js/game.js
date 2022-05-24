@@ -15,6 +15,12 @@ for(var i = 0; i < enemyNames.length; i++) {
     console.log(enemyNames[i] + " is at " + i + " index")
 }
 
+// random number generator
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1)) + min;
+    return value;
+}
+
 // function to start a new game
 var startGame = function() {
     // reset player stats
@@ -26,7 +32,8 @@ var startGame = function() {
         if (playerHealth > 0) {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            //enemyHealth = 50;
+            enemyHealth = randomNumber(40, 60);
             fight(pickedEnemyName);
 
             // if we're not at the last enemy in the array 
@@ -147,8 +154,9 @@ var fight = function(enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + " has decided to skip this fight. Goodbye!");
                 //subtract money from player
-                playerMoney = playerMoney - 10;
-                console.log("playerMoney", playerMoney)
+                //playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
+                console.log("playerMoney", playerMoney);
                 break;
             }
         }
@@ -156,7 +164,10 @@ var fight = function(enemyName) {
         // if player chooses to fight
         if(promptFight === "fight"  || promptFight === "FIGHT") {
             // enemyHealth minus playerAttack then update enemyHealth value
-            enemyHealth = enemyHealth - playerAttack;
+            //enemyHealth = enemyHealth - playerAttack;
+            //enemyHealth = Math.max(0, enemyHealth - playerAttack);
+            var damage = randomNumber(playerAttack - 3, playerAttack);
+            enemyHealth = Math.max(0, enemyHealth - damage);
 
             // log result to console to verify
             console.log(
@@ -177,7 +188,10 @@ var fight = function(enemyName) {
             }
 
             // playerHealth minus enemyAttack then update playerHealth value
-            playerHealth = playerHealth - enemyAttack;
+            //playerHealth = playerHealth - enemyAttack;
+            //playerHealth = Math.max(0, playerHealth - enemyAttack);
+            var damage = randomNumber(enemyAttack - 3, enemyAttack)
+            playerHealth = Math.max(0, playerHealth - damage)
 
             // log result to console to verify
             console.log(
