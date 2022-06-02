@@ -143,13 +143,29 @@ var randomNumber = function(min, max) {
   // function to end the entire game
   var endGame = function() {
     window.alert("The game has now ended. Let's see how you did!");
-  
-    // if player is still alive, player wins!
-    if (playerInfo.health > 0) {
-      window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + '.');
-    } else {
-      window.alert("You've lost your robot in battle!");
+
+    // check localStorage for highscore
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+      highScore = 0;
     }
+
+    if (playerInfo.money > highScore) {
+      localStorage.setItem("highScore", playerInfo.money);
+      localStorage.setItem("name", playerInfo.name);
+
+      alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+    }
+    else {
+      alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!")
+    }
+  
+    // // if player is still alive, player wins!
+    // if (playerInfo.health > 0) {
+    //   window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + '.');
+    // } else {
+    //   window.alert("You've lost your robot in battle!");
+    // }
   
     // ask player if they'd like to play again
     var playAgainConfirm = window.confirm('Would you like to play again?');
